@@ -3,8 +3,8 @@
 #include <string.h>
 #include <time.h>
 
-// Function to check if the current time corresponds to peak hours
-int isPeakTime() {
+int isPeakTime() 
+{
     time_t t;
     struct tm *tm_info;
 
@@ -14,27 +14,29 @@ int isPeakTime() {
     int currentHour = tm_info->tm_hour;
     int currentMinute = tm_info->tm_min;
 
-    // Check for peak hours based on current time
-    if ((currentHour >= 7 && currentHour < 9) ||    // Morning peak (school time on)
-        (currentHour >= 16 && currentHour < 18)) {  // Afternoon peak (school time off, office off time)
+    if ((currentHour >= 7 && currentHour < 9) ||    
+        (currentHour >= 16 && currentHour < 18)) 
+    {  
         return 1; // Peak time
     }
 
     return 0; // Not peak time
 }
 
-int calculatePrice(struct Transportation *transport, bool isPeakTime) {
-    // Calculate the final price based on base price and peak factor
+int calculatePrice(struct Transportation *transport, bool isPeakTime) 
+{ 
     float finalPrice = transport->basePrice;
 
-    if (isPeakTime) {
+    if (isPeakTime) 
+    {
         finalPrice *= transport->peakFactor;
     }
 
     return finalPrice;
 }
 
-void generateBill(char userName[20], char driverName[20], float finalPrice, char pickupLocation[50], char dropoffLocation[50]) {
+void generateBill(char userName[20], char driverName[20], float finalPrice, char pickupLocation[50], char dropoffLocation[50]) 
+{
     printf("\n---------------------- Ride Hailing Bill -----------------------\n\n");
     printf("User Name: %s\n", userName);
     printf("Driver Name: %s\n", driverName);
@@ -44,7 +46,8 @@ void generateBill(char userName[20], char driverName[20], float finalPrice, char
     printf("\n----------------------------------------------------------------\n");
 }
 
-int main() {
+int main() 
+{
     struct Transportation transportDetails;
 
     initializeTransportation(&transportDetails);
