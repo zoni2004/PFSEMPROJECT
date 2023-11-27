@@ -1,4 +1,4 @@
-##Programmers:
+Programmers:
 1.	Zunaira Amjad (23k-0013)
 2.	Tanisha Kataris (23k-0067)
 3.	Rayyan Merchant (23k-0073)
