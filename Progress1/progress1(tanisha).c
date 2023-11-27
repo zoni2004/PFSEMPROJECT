@@ -1,126 +1,211 @@
-// Structure to represent transportation information
-struct Transportation {
-    char destination[50];
-    char vehicleType[20];
-    float price;
+#include <stdio.h>
+#include <stdbool.h>
+
+// Structure to represent cab driver information
+struct CabDriver {
+    char cnic[15];
+    char name[10];
+    char phoneNumber[11];
+    char email[20];
+    char cabNumber[6];
 };
 
-// Function to input transportation details
-void inputTransportation(struct Transportation transport[], int n) {
-    printf("\nEnter Transportation Details:\n");
-    for (int i = 0; i < n; ++i) {
-        printf("\nTransportation %d:\n", i + 1);
-        printf("Enter Destination: ");
-        scanf("%s", transport[i].destination);
-        printf("Enter Vehicle Type: ");
-        scanf("%s", transport[i].vehicleType);
-        printf("Enter Price: ");
-        scanf("%f", &transport[i].price);
-    }
+// Function to input cab driver details
+void inputDriverDetails(struct CabDriver *driver) {
+    printf("Enter CNIC Number: ");
+    scanf("%s", driver->cnic);
+    
+    printf("Enter Name: ");
+    scanf("%s", driver->name);
+
+    printf("Enter Phone Number: ");
+    scanf("%s", driver->phoneNumber);
+
+    printf("Enter Email: ");
+    scanf("%s", driver->email);
+
+    printf("Enter Cab Number: ");
+    scanf("%s", driver->cabNumber);
 }
 
-// Function to display transportation details
-void displayTransportation(struct Transportation transport[], int n) {
-    printf("\nTransportation Details:\n");
-    printf("%-20s%-20s%-10s\n", "Destination", "Vehicle Type", "Price");
-    printf("--------------------------------------------------\n");
+// Function to display cab driver details
+void displayDriverDetails(struct CabDriver driver) {
+    printf("\nCab Driver Details:\n");
+    printf("CNIC Number: %s\n", driver.cnic);
+    printf("Name: %s\n", driver.name);
+    printf("Phone Number: %s\n", driver.phoneNumber);
+    printf("Email: %s\n", driver.email);
 
-    for (int i = 0; i < n; ++i) {
-        printf("%-20s%-20s%-10.2f\n", transport[i].destination, transport[i].vehicleType, transport[i].price);
-    }
+    printf("Cab Number: %s\n", driver.cabNumber);
 }
 
 int main() {
-    // Define the maximum number of transportation details
-    const int MAX_TRANSPORTATIONS = 5;
+    // Declare a structure to store cab driver details
+    struct CabDriver cabDriver;
 
-    // Declare an array of structures to store transportation details
-    struct Transportation transportationDetails[MAX_TRANSPORTATIONS];
+    // Input cab driver details
+    inputDriverDetails(&cabDriver);
 
-    // Input transportation details
-    inputTransportation(transportationDetails, MAX_TRANSPORTATIONS);
+    // Display cab driver details
+    displayDriverDetails(cabDriver);
+return 0;
 
-    // Display transportation details
-    displayTransportation(transportationDetails, MAX_TRANSPORTATIONS);
+}
+#include <stdio.h>
+#include <stdbool.h>
+
+// Structure to represent information about a cab
+struct Cab {
+    char numberPlate[6];
+    char ownerName[20];
+    char registrationNumber[20];
+    char vehicleType[20];
+    char insuranceProof[30];
+    char driversLicense[20];
+    bool isRegistered;
+    bool isAvailable;
+    char currentLocation[50];
+};
+
+// Function to check registration status and availability
+void checkRegistrationAndAvailability(struct Cab *cab) {
+    printf("Have you already registered? (1 for Yes / 0 for No): ");
+    scanf("%d", &cab->isRegistered);
+
+    if (!cab->isRegistered) {
+        printf("You haven't registered. Please register first.\n");
+
+        // Registration process
+        printf("Enter Number Plate: ");
+        scanf("%s", cab->numberPlate);
+
+        printf("Enter Owner's Name: ");
+        scanf("%s", cab->ownerName);
+
+        printf("Enter Registration Number: ");
+        scanf("%s", cab->registrationNumber);
+
+        printf("Enter Vehicle Type (e.g., rickshaw, auto, bicycle, car): ");
+        scanf("%s", cab->vehicleType);
+
+        printf("Enter Proof of Auto Insurance: ");
+        scanf("%s", cab->insuranceProof);
+
+        printf("Enter Driver's License: ");
+        scanf("%s", cab->driversLicense);
+
+        cab->isRegistered = true; // Mark as registered after inputting details
+        printf("Registration successful! Moving on.\n");
+    }
+
+    printf("Are you available right now? (1 for Yes / 0 for No): ");
+    scanf("%d", &cab->isAvailable);
+
+    if (cab->isAvailable) {
+        printf("You are available. Proceeding...\n");
+        printf("Enter your current location: ");
+        scanf("%s", cab->currentLocation);
+        printf("Location set to: %s\n", cab->currentLocation);
+    } else {
+        printf("You are not available right now.\n");
+    }
+}
+
+// Function to display cab details
+void displayCabDetails(struct Cab cab) {
+    printf("\nCab Details:\n");
+    printf("Number Plate: %s\n", cab.numberPlate);
+    printf("Owner's Name: %s\n", cab.ownerName);
+    printf("Registration Number: %s\n", cab.registrationNumber);
+    printf("Vehicle Type: %s\n", cab.vehicleType);
+    printf("Proof of Auto Insurance: %s\n", cab.insuranceProof);
+    printf("Driver's License: %s\n", cab.driversLicense);
+    printf("Is Registered: %s\n", cab.isRegistered ? "Yes" : "No");
+    printf("Is Available: %s\n", cab.isAvailable ? "Yes" : "No");
+    printf("Current Location: %s\n", cab.currentLocation);
+}
+
+int main() {
+    // Declare a structure to store cab details
+    struct Cab cabDetails;
+
+    // Check registration status and availability
+    checkRegistrationAndAvailability(&cabDetails);
+
+    // Display cab details
+    displayCabDetails(cabDetails);
 
     return 0;
 }
 #include <stdio.h>
-#include <string.h>
+#include <time.h>
 
-// Structure to represent a cab
-struct Cab {
-    int cabID;
-    char driverName[50];
+// Structure to represent transportation information
+struct Transportation {
+    char destination[50];
+    char vehicleType[20];
     float basePrice;
+    float peakFactor;
 };
 
-// Function to calculate the peak pricing multiplier based on demand
-float calculatePeakMultiplier(int hour) {
-    // Simple peak pricing logic (you can customize based on your needs)
-    if ((hour >= 9 && hour <= 10) || (hour >= 18 && hour <= 19)) {
-        return 1.5; // Peak demand hours, increase the price
-    } else {
-        return 1.0; // Non-peak hours, normal price
-    }
+// Function to initialize predefined transportation details
+void initializeTransportation(struct Transportation *transport) {
+    // Predefined transportation details
+    transport->basePrice = 300.0;
+    transport->peakFactor = 1.0; // Default peak factor
+
+    // Add more predefined details as needed
 }
 
-// Function to book a cab
-void bookCab(struct Cab cabs[], int numCabs, int hour) {
-    int cabID;
-    printf("Enter the cab ID you want to book: ");
-    scanf("%d", &cabID);
+// Function to check if the current time corresponds to peak hours
+int isPeakTime() {
+    time_t t;
+    struct tm *tm_info;
 
-    if (cabID < 1 || cabID > numCabs) {
-        printf("Invalid cab ID. Please enter a valid cab ID.\n");
-        return;
+    time(&t);
+    tm_info = localtime(&t);
+
+    int currentHour = tm_info->tm_hour;
+    int currentMinute = tm_info->tm_min;
+
+    // Check for peak hours based on current time
+    if ((currentHour >= 7 && currentHour < 9) ||    // Morning peak (school time on)
+        (currentHour >= 16 && currentHour < 18)) {  // Afternoon peak (school time off, office off time)
+        return 1; // Peak time
     }
 
-    float peakMultiplier = calculatePeakMultiplier(hour);
-    float totalPrice = cabs[cabID - 1].basePrice * peakMultiplier;
-
-    printf("\nBooking Details:\n");
-    printf("Cab ID: %d\n", cabs[cabID - 1].cabID);
-    printf("Driver Name: %s\n", cabs[cabID - 1].driverName);
-    printf("Total Price: $%.2f\n", totalPrice);
-
-    // Ask the user if they agree to pay the peak pricing
-    char choice[10];
-    printf("Do you agree to pay the peak pricing? (Type 'yes' or 'no'): ");
-    scanf("%s", choice);
-
-    if (strcmp(choice, "yes") == 0) {
-        printf("Thank you for accepting the peak pricing. Your ride is booked!\n");
-    } else {
-        printf("You chose not to accept the peak pricing. You can try again later or select a different category.\n");
-    }
+    return 0; // Not peak time
 }
 
 int main() {
-    // Define an array of cabs
-    struct Cab cabs[] = {
-        {1, "John Doe", 10.0},
-        {2, "Jane Smith", 12.0},
-        {3, "Bob Johnson", 15.0},
-        // Add more cabs as needed
-    };
+    // Declare a structure to store transportation details
+    struct Transportation transportDetails;
 
-    int numCabs = sizeof(cabs) / sizeof(cabs[0]);
+    // Initialize transportation details
+    initializeTransportation(&transportDetails);
 
-    // Get the current hour from the user
-    int currentHour;
-    printf("Enter the current hour (0-23): ");
-    scanf("%d", &currentHour);
-
-    // Display available cabs
-    printf("\nAvailable Cabs:\n");
-    printf("CabID\tDriver Name\tBase Price\n");
-    for (int i = 0; i < numCabs; i++) {
-        printf("%d\t%s\t\t$%.2f\n", cabs[i].cabID, cabs[i].driverName, cabs[i].basePrice);
+    // Check if it's peak time
+    if (isPeakTime()) {
+        printf("It's peak time! Prices are increased.\n");
+        transportDetails.peakFactor = 1.5; // Increase the peak factor as an example
+    } else {
+        printf("It's not peak time. Prices are normal.\n");
     }
 
-    // Book a cab
-    bookCab(cabs, numCabs, currentHour);
+    // User input for preferred destination and vehicle
+    char userDestination[50];
+    char userVehicleType[20];
+
+    printf("Enter your destination: ");
+    scanf("%s", userDestination);
+
+    printf("Choose your preferred vehicle (Bike, Car, Rickshaw): ");
+    scanf("%s", userVehicleType);
+
+    // Calculate and display the final price
+    float finalPrice = transportDetails.basePrice * transportDetails.peakFactor;
+    printf("\nThe final price for Destination '%s' with Vehicle Type '%s' is $%.2f\n", userDestination, userVehicleType, finalPrice);
 
     return 0;
 }
+
