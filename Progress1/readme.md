@@ -6,7 +6,7 @@ Tanisha Kataria (23k-0067)
 DESCRIPYION: CAB CALLING SERVICE
 
 LINK:
-[PF SEM PROJECT (1).docx](https://github.com/zoni2004/PFSEMPROJECT/files/13476559/PF.SEM.PROJECT.1.docx)
+https://docs.google.com/document/d/1iR2aF8pg_EvJP8DkRSaCUtAlEhXwLBjLyuu2_I0QzWQ/edit?usp=sharing
 
  
  
