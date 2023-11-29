@@ -209,3 +209,32 @@ int main() {
     return 0;
 }
 
+#include <stdio.h>
+#include <stdbool.h>
+
+// Function to check if the user is already registered
+bool isRegistered() {
+    char response;
+
+    printf("Are you already registered for transportation? (y/n): ");
+    scanf(" %c", &response);
+
+    // Check the user's response
+    if (response == 'y' || response == 'Y') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+int main() {
+    // Call the function
+    if (isRegistered()) {
+        printf("You are already registered for transportation.\n");
+    } else {
+        printf("You are not registered for transportation yet.\n");
+        // Add code here to handle the registration process if needed
+    }
+
+    return 0;
+}
