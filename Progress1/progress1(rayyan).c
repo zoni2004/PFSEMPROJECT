@@ -115,10 +115,40 @@ void generateBill(struct User user, struct CabDriver driver, struct Transportati
 }
 
 
+#include <stdio.h>
+
+// Structure to represent feedback
+struct DriverFeedback 
+{
+    int rating;
+    char comments[100];
+};
+
+// Function to gather feedback from the driver
+void provideDriverFeedback(struct CabDriver *driver) 
+{
+    struct DriverFeedback feedback;
+
+    // Get rating from the driver
+    printf("Rate your experience as a driver (1 to 5): ");
+    scanf("%d", &feedback.rating);
+
+    // Get comments from the driver
+    printf("Provide comments (optional): ");
+    scanf(" %[^\n]", feedback.comments);
+
+    // Process or store the feedback as needed
+    processDriverFeedback(driver, feedback);
+
+    printf("Thank you for providing feedback!\n");
+}
+
+
 
 int main() 
 {
-    struct Transportation transportDetails;
+    struct Transportation transportDetails; 
+    struct cabDriver chosenDriver;
 
     initializeTransportation(&transportDetails);
 
@@ -150,6 +180,8 @@ int main()
     simulatePaymentProcessing(finalPrice, userDetails.paymentMethod);
 
     rateDriver(&chosenDriver);
+
+     provideDriverFeedback(&chosenDriver);
 
     return 0;
 }
