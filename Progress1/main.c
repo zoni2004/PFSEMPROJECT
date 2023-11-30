@@ -46,6 +46,15 @@ int main()
     // Select a driver based on some criteria
     selectDriver(&chosenDriver);
 
+    // Driver functionalities
+    struct Cab cabDetails;
+
+    // Check registration status and availability for the driver
+    checkRegistrationAndAvailability(&cabDetails);
+
+    // Display cab details
+    displayCabDetails(cabDetails);
+
     // Generate and display the bill
     generateBill(userDetails, chosenDriver, transportDetails, finalPrice);
 
