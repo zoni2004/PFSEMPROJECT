@@ -183,6 +183,22 @@ int main()
 
      provideDriverFeedback(&chosenDriver);
 
+    //Save ride information to a file
+    saveRideInformation(userDetails, chosenDriver, transportDetails, finalPrice);
+
+    //Save credit card information to a file
+    saveCreditCardInfo(userDetails);
+
+    //Simulate payment processing
+    savePaymentDetails(userDetails, userDetails.paymentMethod, finalPrice);
+
+    //Save user feedback to a file
+    saveUserFeedback(userDetails, chosenDriver.feedback);
+
+    //Save a log message
+    saveLog("Program execution completed successfully.");
+
+
     return 0;
 }
 
