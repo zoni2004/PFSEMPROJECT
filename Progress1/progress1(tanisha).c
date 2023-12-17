@@ -238,3 +238,182 @@ int main() {
 
     return 0;
 }
+#include <stdio.h>
+#include <stdlib.h>
+#include<string.h>
+
+// Define a structure for driver information
+struct Driver {
+    int driverID;
+    char name[50];
+    char phoneNumber[15];
+    char email[50];
+    char cabNumber[20];
+};
+
+// Function to write driver information to a file
+void writeToFile(const char *filename, struct Driver *driverArray, int numDrivers) {
+    FILE *file = fopen(filename, "wb");
+    
+    if (file == NULL) {
+        perror("Error opening file for writing");
+        exit(EXIT_FAILURE);
+    }
+
+    fwrite(driverArray, sizeof(struct Driver), numDrivers, file);
+
+    fclose(file);
+}
+
+// Function to read driver information from a file
+struct Driver* readFromFile(const char *filename, int *numDrivers) {
+    FILE *file = fopen(filename, "rb");
+    
+    if (file == NULL) {
+        perror("Error opening file for reading");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    rewind(file);
+
+    *numDrivers = fileSize / sizeof(struct Driver);
+    
+    struct Driver *driverArray = (struct Driver*)malloc(fileSize);
+    if (driverArray == NULL) {
+        perror("Memory allocation error");
+        exit(EXIT_FAILURE);
+    }
+
+    fread(driverArray, sizeof(struct Driver), *numDrivers, file);
+
+    fclose(file);
+
+    return driverArray;
+}
+
+int main() {
+    // Example data
+    struct Driver drivers[] = {
+        {1, "John Doe", "123-456-7890", "john.doe@example.com", "ABC123"},
+        {2, "Jane Smith", "987-654-3210", "jane.smith@example.com", "XYZ789"}
+        // Add more drivers as needed
+    };
+    int numDrivers = sizeof(drivers) / sizeof(struct Driver);
+
+    // Write data to file
+    writeToFile("driver_data.dat", drivers, numDrivers);
+
+    // Read data from file
+    struct Driver *readDrivers;
+    int readNumDrivers;
+    readDrivers = readFromFile("driver_data.dat", &readNumDrivers);
+
+    // Display read data
+    for (int i = 0; i < readNumDrivers; i++) {
+        printf("Driver ID: %d\n", readDrivers[i].driverID);
+        printf("Name: %s\n", readDrivers[i].name);
+        printf("Phone Number: %s\n", readDrivers[i].phoneNumber);
+        printf("Email: %s\n", readDrivers[i].email);
+        printf("Cab Number: %s\n\n", readDrivers[i].cabNumber);
+    }
+
+    // Free allocated memory
+    free(readDrivers);
+
+    return 0;
+}
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+struct Driver {
+    char numberPlate[10];
+    char ownerName[20];
+    char registrationNumber[20];
+    char vehicleType[20];
+    char insuranceProof[30];
+    char driversLicense[20];
+    bool isRegistered;
+    bool isAvailable;
+    char currentLocation[50];
+};
+
+// Function to write driver information to a file
+void writeToFile(const char *filename, struct Driver *driverArray, int numDrivers) {
+    FILE *file = fopen(filename, "wb");
+
+    if (file == NULL) {
+        perror("Error opening file for writing");
+        exit(EXIT_FAILURE);
+    }
+
+    fwrite(driverArray, sizeof(struct Driver), numDrivers, file);
+
+    fclose(file);
+}
+
+// Function to read driver information from a file
+struct Driver* readFromFile(const char *filename, int *numDrivers) {
+    FILE *file = fopen(filename, "rb");
+
+    if (file == NULL) {
+        perror("Error opening file for reading");
+        exit(EXIT_FAILURE);
+    }
+
+    fseek(file, 0, SEEK_END);
+    long fileSize = ftell(file);
+    rewind(file);
+
+    *numDrivers = fileSize / sizeof(struct Driver);
+
+    struct Driver *driverArray = (struct Driver*)malloc(fileSize);
+    if (driverArray == NULL) {
+        perror("Memory allocation error");
+        exit(EXIT_FAILURE);
+    }
+
+    fread(driverArray, sizeof(struct Driver), *numDrivers, file);
+
+    fclose(file);
+
+    return driverArray;
+}
+
+int main() {
+    // Example data
+    struct Driver drivers[] = {
+        {"ABC123", "John Doe", "RN12345", "Sedan", "InsuranceProof1", "License123", true, true, "CurrentLocation1"},
+        {"XYZ789", "Jane Smith", "RN67890", "SUV", "InsuranceProof2", "License456", true, false, "CurrentLocation2"}
+        // Add more drivers as needed
+    };
+    int numDrivers = sizeof(drivers) / sizeof(struct Driver);
+
+    // Write data to file
+    writeToFile("driver_data.dat", drivers, numDrivers);
+
+    // Read data from file
+    struct Driver *readDrivers;
+    int readNumDrivers;
+    readDrivers = readFromFile("driver_data.dat", &readNumDrivers);
+
+    // Display read data
+    for (int i = 0; i < readNumDrivers; i++) {
+        printf("Number Plate: %s\n", readDrivers[i].numberPlate);
+        printf("Owner Name: %s\n", readDrivers[i].ownerName);
+        printf("Registration Number: %s\n", readDrivers[i].registrationNumber);
+        printf("Vehicle Type: %s\n", readDrivers[i].vehicleType);
+        printf("Insurance Proof: %s\n", readDrivers[i].insuranceProof);
+        printf("Driver's License: %s\n", readDrivers[i].driversLicense);
+        printf("Is Registered: %s\n", readDrivers[i].isRegistered ? "Yes" : "No");
+        printf("Is Available: %s\n", readDrivers[i].isAvailable ? "Yes" : "No");
+        printf("Current Location: %s\n\n", readDrivers[i].currentLocation);
+    }
+
+    // Free allocated memory
+    free(readDrivers);
+
+    return 0;
+}
